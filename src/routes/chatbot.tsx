@@ -3,7 +3,9 @@ import { useEffect, useRef, useState } from "react";
 import { MessageCircle, Send, Sparkles, User, Eraser } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { PageHeader } from "@/components/PageHeader";
-import { buildChatReply } from "@/lib/mock-ai";
+import { useServerFn } from "@tanstack/react-start";
+import { toast } from "sonner";
+import { generateChatReply } from "@/lib/ai.functions";
 
 export const Route = createFileRoute("/chatbot")({
   head: () => ({
@@ -50,19 +52,36 @@ function Chatbot() {
     endRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [messages, typing]);
 
-  const send = (text: string) => {
+  const runChat = useServerFn(generateChatReply);
+
+  const send = async (text: string) => {
     const value = text.trim();
     if (!value || typing) return;
-    setMessages((prev) => [...prev, { id: Date.now(), role: "user", content: value }]);
+    const next: Message[] = [
+      ...messages,
+      { id: Date.now(), role: "user", content: value },
+    ];
+    setMessages(next);
     setInput("");
     setTyping(true);
-    setTimeout(() => {
+    try {
+      const res = await runChat({
+        data: {
+          messages: next
+            .filter((m) => m.id !== 0)
+            .slice(-12)
+            .map((m) => ({ role: m.role, content: m.content })),
+        },
+      });
       setMessages((prev) => [
         ...prev,
-        { id: Date.now() + 1, role: "assistant", content: buildChatReply(value) },
+        { id: Date.now() + 1, role: "assistant", content: res.reply },
       ]);
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Could not reach the assistant.");
+    } finally {
       setTyping(false);
-    }, 900);
+    }
   };
 
   return (

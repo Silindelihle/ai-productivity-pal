@@ -61,8 +61,8 @@ export function AppShell({ children }: { children: ReactNode }) {
           <NavLinks />
         </div>
         <div className="rounded-2xl bg-gradient-hero p-4 text-xs text-accent-foreground">
-          <p className="font-semibold">Prototype demo</p>
-          <p className="mt-1 opacity-80">All AI responses are illustrative samples.</p>
+          <p className="font-semibold">Live AI</p>
+          <p className="mt-1 opacity-80">Responses are generated in real time — always review them.</p>
         </div>
       </aside>
 

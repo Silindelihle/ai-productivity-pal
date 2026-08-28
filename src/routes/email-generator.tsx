@@ -6,7 +6,9 @@ import { AppShell } from "@/components/AppShell";
 import { PageHeader } from "@/components/PageHeader";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { buildEmail, type Tone } from "@/lib/mock-ai";
+import { useServerFn } from "@tanstack/react-start";
+import { generateEmail } from "@/lib/ai.functions";
+import { type Tone } from "@/lib/mock-ai";
 
 export const Route = createFileRoute("/email-generator")({
   head: () => ({
@@ -39,16 +41,22 @@ function EmailGenerator() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const generate = () => {
+  const runGenerate = useServerFn(generateEmail);
+
+  const generate = async () => {
     if (!brief.trim()) {
       toast.error("Add a few details about the email first.");
       return;
     }
     setLoading(true);
-    setTimeout(() => {
-      setEmail(buildEmail(brief, tone));
+    try {
+      const res = await runGenerate({ data: { brief, tone } });
+      setEmail(res.email);
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Could not generate the email.");
+    } finally {
       setLoading(false);
-    }, 750);
+    }
   };
 
   const copy = async () => {
