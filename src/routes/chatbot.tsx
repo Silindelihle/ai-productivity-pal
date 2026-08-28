@@ -3,7 +3,9 @@ import { useEffect, useRef, useState } from "react";
 import { MessageCircle, Send, Sparkles, User, Eraser } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { PageHeader } from "@/components/PageHeader";
-import { buildChatReply } from "@/lib/mock-ai";
+import { useServerFn } from "@tanstack/react-start";
+import { toast } from "sonner";
+import { generateChatReply } from "@/lib/ai.functions";
 
 export const Route = createFileRoute("/chatbot")({
   head: () => ({
