@@ -6,7 +6,9 @@ import { AppShell } from "@/components/AppShell";
 import { PageHeader } from "@/components/PageHeader";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { buildResearch, type ResearchResult } from "@/lib/mock-ai";
+import { useServerFn } from "@tanstack/react-start";
+import { generateResearch } from "@/lib/ai.functions";
+import { type ResearchResult } from "@/lib/mock-ai";
 
 export const Route = createFileRoute("/research-assistant")({
   head: () => ({
@@ -32,16 +34,22 @@ function ResearchAssistant() {
   const [result, setResult] = useState<ResearchResult | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const analyse = () => {
+  const runAnalyse = useServerFn(generateResearch);
+
+  const analyse = async () => {
     if (!input.trim()) {
       toast.error("Add a topic, question, or some text to analyse.");
       return;
     }
     setLoading(true);
-    setTimeout(() => {
-      setResult(buildResearch(input));
+    try {
+      const res = await runAnalyse({ data: { input } });
+      setResult(res);
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Could not analyse that.");
+    } finally {
       setLoading(false);
-    }, 800);
+    }
   };
 
   const copyResults = async () => {
