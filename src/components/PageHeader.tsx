@@ -14,7 +14,7 @@ export function PageHeader({
   return (
     <header className="mb-8">
       <div className="flex items-start gap-4">
-        <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-gradient-primary text-primary-foreground shadow-glow">
+        <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-primary text-primary-foreground shadow-soft">
           <Icon className="size-6" />
         </span>
         <div>

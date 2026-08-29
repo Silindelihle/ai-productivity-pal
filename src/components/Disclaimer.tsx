@@ -5,7 +5,7 @@ export function Disclaimer({ className }: { className?: string }) {
   return (
     <aside
       className={cn(
-        "flex gap-3 rounded-2xl border border-border bg-gradient-hero p-4 text-sm text-accent-foreground",
+        "flex gap-3 rounded-2xl border border-border bg-muted p-4 text-sm text-foreground",
         className,
       )}
     >

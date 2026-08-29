@@ -1,6 +1,16 @@
 import { Link } from "@tanstack/react-router";
 import { useState, type ReactNode } from "react";
-import { LayoutDashboard, Mail, Search, MessageCircle, Menu, X, Sparkles } from "lucide-react";
+import {
+  LayoutDashboard,
+  Mail,
+  Search,
+  MessageCircle,
+  Menu,
+  X,
+  Sparkles,
+  PanelLeftClose,
+  PanelLeftOpen,
+} from "lucide-react";
 import { Disclaimer } from "./Disclaimer";
 
 const navItems = [
@@ -10,7 +20,7 @@ const navItems = [
   { to: "/chatbot", label: "AI Chatbot", icon: MessageCircle },
 ] as const;
 
-function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
+function NavLinks({ onNavigate, collapsed }: { onNavigate?: () => void; collapsed?: boolean }) {
   return (
     <nav className="flex flex-col gap-1">
       {navItems.map(({ to, label, icon: Icon }) => (
@@ -18,52 +28,91 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
           key={to}
           to={to}
           onClick={onNavigate}
+          title={collapsed ? label : undefined}
+          aria-label={label}
           activeOptions={{ exact: to === "/" }}
-          className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-sidebar-foreground/80 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+          className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-sidebar-foreground/80 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground ${
+            collapsed ? "justify-center px-0" : ""
+          }`}
           activeProps={{
-            className:
-              "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold bg-gradient-primary text-primary-foreground shadow-glow",
+            className: `flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold bg-primary text-primary-foreground shadow-soft ${
+              collapsed ? "justify-center px-0" : ""
+            }`,
           }}
         >
           <Icon className="size-4 shrink-0" />
-          <span className="truncate">{label}</span>
+          {!collapsed && <span className="truncate">{label}</span>}
         </Link>
       ))}
     </nav>
   );
 }
 
-function Brand() {
+function Brand({ compact }: { compact?: boolean }) {
   return (
     <div className="flex items-center gap-3">
-      <span className="grid size-10 place-items-center rounded-2xl bg-gradient-primary text-primary-foreground shadow-glow">
+      <span className="grid size-10 shrink-0 place-items-center rounded-2xl bg-primary text-primary-foreground shadow-soft">
         <Sparkles className="size-5" />
       </span>
-      <div className="leading-tight">
-        <p className="font-display text-sm font-bold">AI Workplace</p>
-        <p className="text-xs text-muted-foreground">Productivity Assistant</p>
-      </div>
+      {!compact && (
+        <div className="leading-tight">
+          <p className="font-display text-sm font-bold">AI Workplace</p>
+          <p className="text-xs text-muted-foreground">Productivity Assistant</p>
+        </div>
+      )}
     </div>
   );
 }
 
 export function AppShell({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
+  const [collapsed, setCollapsed] = useState(false);
 
   return (
     <div className="min-h-screen bg-background">
-      <aside className="fixed inset-y-0 left-0 z-40 hidden w-72 flex-col border-r border-sidebar-border bg-sidebar px-5 py-6 lg:flex">
-        <Brand />
-        <div className="mt-8 flex-1">
-          <p className="mb-3 px-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-            Workspace
-          </p>
-          <NavLinks />
+      <aside
+        className={`fixed inset-y-0 left-0 z-40 hidden flex-col border-r border-sidebar-border bg-sidebar py-6 transition-all duration-200 lg:flex ${
+          collapsed ? "w-20 px-3" : "w-72 px-5"
+        }`}
+      >
+        <div className={collapsed ? "flex justify-center" : "flex items-center justify-between"}>
+          <Brand compact={collapsed} />
         </div>
-        <div className="rounded-2xl bg-gradient-hero p-4 text-xs text-accent-foreground">
-          <p className="font-semibold">Live AI</p>
-          <p className="mt-1 opacity-80">Responses are generated in real time — always review them.</p>
+
+        <button
+          type="button"
+          onClick={() => setCollapsed((v) => !v)}
+          aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+          className={`mt-6 inline-flex items-center gap-2 rounded-xl border border-sidebar-border bg-card px-3 py-2 text-xs font-semibold text-muted-foreground transition-colors hover:bg-secondary ${
+            collapsed ? "justify-center" : ""
+          }`}
+        >
+          {collapsed ? (
+            <PanelLeftOpen className="size-4" />
+          ) : (
+            <>
+              <PanelLeftClose className="size-4" /> Collapse
+            </>
+          )}
+        </button>
+
+        <div className="mt-6 flex-1">
+          {!collapsed && (
+            <p className="mb-3 px-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              Workspace
+            </p>
+          )}
+          <NavLinks collapsed={collapsed} />
         </div>
+
+        {!collapsed && (
+          <div className="rounded-2xl border border-sidebar-border bg-muted p-4 text-xs text-foreground">
+            <p className="font-semibold">Live AI</p>
+            <p className="mt-1 text-muted-foreground">
+              Responses are generated in real time — always review them.
+            </p>
+          </div>
+        )}
       </aside>
 
       <header className="sticky top-0 z-50 flex items-center justify-between border-b border-border bg-background/85 px-4 py-3 backdrop-blur lg:hidden">
@@ -84,8 +133,8 @@ export function AppShell({ children }: { children: ReactNode }) {
         </div>
       )}
 
-      <main className="lg:pl-72">
-        <div className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6 lg:px-10 lg:py-12">
+      <main className={collapsed ? "lg:pl-20" : "lg:pl-72"}>
+        <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 lg:px-10 lg:py-12">
           {children}
           <Disclaimer className="mt-10" />
         </div>
