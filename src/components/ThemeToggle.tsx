@@ -31,7 +31,7 @@ export function ThemeToggle({ compact }: { compact?: boolean }) {
       title={`Switch to ${next} theme`}
       aria-label={`Switch to ${next} theme`}
       className={`inline-flex items-center gap-2 rounded-xl border border-border bg-card px-3 py-2 text-xs font-semibold text-muted-foreground transition-colors hover:bg-secondary ${
-        compact ? "justify-center px-0 w-full" : ""
+        compact ? "justify-center px-0 size-10" : ""
       }`}
     >
       <Palette className="size-4 shrink-0" />
