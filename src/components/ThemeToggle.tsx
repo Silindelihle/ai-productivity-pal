@@ -5,7 +5,7 @@ const STORAGE_KEY = "app-theme";
 type Theme = "indigo" | "blush";
 
 export function useTheme() {
-  const [theme, setTheme] = useState<Theme>("indigo");
+  const [theme, setTheme] = useState<Theme>("blush");
 
   useEffect(() => {
     const stored = localStorage.getItem(STORAGE_KEY) as Theme | null;
