@@ -92,7 +92,60 @@ function Dashboard() {
       </section>
 
       <section className="mt-10">
+        <div className="flex items-end justify-between gap-4">
+          <h2 className="text-lg font-bold sm:text-xl">Analytics overview</h2>
+          <span className="text-xs font-medium text-muted-foreground">Last 30 days</span>
+        </div>
+        <div className="mt-4 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+          {metrics.map(({ label, value, delta, up, icon: Icon }) => (
+            <article key={label} className="card-surface p-6">
+              <div className="flex items-center justify-between">
+                <p className="text-sm font-medium text-muted-foreground">{label}</p>
+                <span className="grid size-9 place-items-center rounded-xl bg-secondary text-primary">
+                  <Icon className="size-4" />
+                </span>
+              </div>
+              <p className="mt-4 text-4xl font-bold tracking-tight tabular-nums sm:text-5xl">
+                {value}
+              </p>
+              <p
+                className={
+                  up
+                    ? "mt-3 inline-flex items-center gap-1 text-sm font-semibold text-primary"
+                    : "mt-3 inline-flex items-center gap-1 text-sm font-semibold text-muted-foreground"
+                }
+              >
+                {up ? <TrendingUp className="size-4" /> : <TrendingDown className="size-4" />}
+                {delta}
+                <span className="font-normal text-muted-foreground">vs last month</span>
+              </p>
+            </article>
+          ))}
+        </div>
+
+        <div className="card-surface mt-5 p-6">
+          <div className="flex items-end justify-between gap-4">
+            <h3 className="text-sm font-semibold">Weekly AI usage</h3>
+            <span className="text-xs text-muted-foreground">requests per week</span>
+          </div>
+          <div className="mt-6 flex h-40 items-end gap-2 sm:gap-3">
+            {usage.map((u) => (
+              <div key={u.week} className="flex flex-1 flex-col items-center gap-2">
+                <div
+                  className="w-full rounded-t-lg bg-primary/85"
+                  style={{ height: `${(u.value / 260) * 100}%` }}
+                  title={`${u.week}: ${u.value}`}
+                />
+                <span className="text-[11px] text-muted-foreground">{u.week}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="mt-10">
         <h2 className="text-lg font-bold sm:text-xl">Your tools</h2>
+
         <div className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {features.map(({ to, icon: Icon, title, text }) => (
             <Link
