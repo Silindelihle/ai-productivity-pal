@@ -159,7 +159,7 @@ function Dashboard() {
           </div>
           <div className="mt-6 flex h-40 items-end gap-2 sm:gap-3">
             {usage.map((u) => (
-              <div key={u.week} className="flex flex-1 flex-col items-center gap-2">
+              <div key={u.week} className="flex h-full flex-1 flex-col items-center justify-end gap-2">
                 <div
                   className="w-full rounded-t-lg bg-primary/85"
                   style={{ height: `${(u.value / 260) * 100}%` }}
