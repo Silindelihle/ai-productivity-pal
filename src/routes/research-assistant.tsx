@@ -104,7 +104,7 @@ function ResearchAssistant() {
             type="button"
             onClick={analyse}
             disabled={loading}
-            className="inline-flex items-center gap-2 rounded-xl bg-gradient-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-glow transition-transform hover:-translate-y-0.5 disabled:opacity-70"
+            className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-soft transition-transform hover:-translate-y-0.5 disabled:opacity-70"
           >
             <Sparkles className={loading ? "size-4 animate-pulse" : "size-4"} />
             {loading ? "Analysing…" : "Analyse"}

@@ -87,7 +87,7 @@
   --gradient-primary: linear-gradient(135deg, oklch(0.72 0.14 340), oklch(0.68 0.13 300));
   --gradient-soft: linear-gradient(160deg, oklch(1 0 0) 0%, oklch(0.98 0.018 330) 100%);
   --shadow-soft: 0 1px 2px oklch(0.55 0.08 320 / 0.06), 0 12px 28px -12px oklch(0.55 0.08 320 / 0.18);
-  --shadow-glow: 0 18px 48px -20px oklch(0.68 0.14 335 / 0.45);
+  --shadow-soft: 0 18px 48px -20px oklch(0.68 0.14 335 / 0.45);
 
   --chart-1: oklch(0.68 0.14 335);
   --chart-2: oklch(0.72 0.11 300);
@@ -126,15 +126,15 @@
   }
 }
 
-@utility bg-gradient-hero {
+@utility bg-muted {
   background-image: var(--gradient-hero);
 }
 
-@utility bg-gradient-primary {
+@utility bg-primary {
   background-image: var(--gradient-primary);
 }
 
-@utility bg-gradient-soft {
+@utility bg-card {
   background-image: var(--gradient-soft);
 }
 
@@ -142,8 +142,8 @@
   box-shadow: var(--shadow-soft);
 }
 
-@utility shadow-glow {
-  box-shadow: var(--shadow-glow);
+@utility shadow-soft {
+  box-shadow: var(--shadow-soft);
 }
 
 @utility card-surface {

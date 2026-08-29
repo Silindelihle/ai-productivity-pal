@@ -115,14 +115,14 @@ function Chatbot() {
               className={m.role === "user" ? "flex justify-end gap-3" : "flex gap-3"}
             >
               {m.role === "assistant" && (
-                <span className="grid size-8 shrink-0 place-items-center rounded-xl bg-gradient-primary text-primary-foreground">
+                <span className="grid size-8 shrink-0 place-items-center rounded-xl bg-primary text-primary-foreground">
                   <Sparkles className="size-4" />
                 </span>
               )}
               <div
                 className={
                   m.role === "user"
-                    ? "max-w-[80%] rounded-2xl bg-gradient-primary px-4 py-3 text-sm leading-relaxed text-primary-foreground shadow-glow"
+                    ? "max-w-[80%] rounded-2xl bg-primary px-4 py-3 text-sm leading-relaxed text-primary-foreground shadow-soft"
                     : "max-w-[80%] whitespace-pre-line rounded-2xl border border-border bg-card px-4 py-3 text-sm leading-relaxed shadow-soft"
                 }
               >
@@ -137,7 +137,7 @@ function Chatbot() {
           ))}
           {typing && (
             <div className="flex gap-3">
-              <span className="grid size-8 shrink-0 place-items-center rounded-xl bg-gradient-primary text-primary-foreground">
+              <span className="grid size-8 shrink-0 place-items-center rounded-xl bg-primary text-primary-foreground">
                 <Sparkles className="size-4" />
               </span>
               <div className="flex items-center gap-1.5 rounded-2xl border border-border bg-card px-4 py-3.5 shadow-soft">
@@ -185,7 +185,7 @@ function Chatbot() {
               type="submit"
               disabled={!input.trim() || typing}
               aria-label="Send message"
-              className="grid size-11 shrink-0 place-items-center rounded-xl bg-gradient-primary text-primary-foreground shadow-glow transition-transform hover:-translate-y-0.5 disabled:opacity-50"
+              className="grid size-11 shrink-0 place-items-center rounded-xl bg-primary text-primary-foreground shadow-soft transition-transform hover:-translate-y-0.5 disabled:opacity-50"
             >
               <Send className="size-4" />
             </button>

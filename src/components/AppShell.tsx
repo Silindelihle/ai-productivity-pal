@@ -22,7 +22,7 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
           className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-sidebar-foreground/80 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
           activeProps={{
             className:
-              "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold bg-gradient-primary text-primary-foreground shadow-glow",
+              "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold bg-primary text-primary-foreground shadow-soft",
           }}
         >
           <Icon className="size-4 shrink-0" />
@@ -36,7 +36,7 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
 function Brand() {
   return (
     <div className="flex items-center gap-3">
-      <span className="grid size-10 place-items-center rounded-2xl bg-gradient-primary text-primary-foreground shadow-glow">
+      <span className="grid size-10 place-items-center rounded-2xl bg-primary text-primary-foreground shadow-soft">
         <Sparkles className="size-5" />
       </span>
       <div className="leading-tight">
@@ -60,7 +60,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           </p>
           <NavLinks />
         </div>
-        <div className="rounded-2xl bg-gradient-hero p-4 text-xs text-accent-foreground">
+        <div className="rounded-2xl bg-muted p-4 text-xs text-foreground">
           <p className="font-semibold">Live AI</p>
           <p className="mt-1 opacity-80">Responses are generated in real time — always review them.</p>
         </div>

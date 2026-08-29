@@ -104,7 +104,7 @@ function EmailGenerator() {
                   aria-pressed={active}
                   className={
                     active
-                      ? "rounded-2xl bg-gradient-primary p-3 text-left text-primary-foreground shadow-glow"
+                      ? "rounded-2xl bg-primary p-3 text-left text-primary-foreground shadow-soft"
                       : "rounded-2xl border border-border bg-card p-3 text-left transition-colors hover:bg-secondary"
                   }
                 >
@@ -128,7 +128,7 @@ function EmailGenerator() {
               type="button"
               onClick={generate}
               disabled={loading}
-              className="inline-flex items-center gap-2 rounded-xl bg-gradient-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-glow transition-transform hover:-translate-y-0.5 disabled:opacity-70"
+              className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-soft transition-transform hover:-translate-y-0.5 disabled:opacity-70"
             >
               <Sparkles className={loading ? "size-4 animate-pulse" : "size-4"} />
               {loading ? "Generating…" : "Generate Email"}
