@@ -1,5 +1,18 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Mail, Search, MessageCircle, ArrowRight, Clock, Target, Wand2 } from "lucide-react";
+import {
+  Mail,
+  Search,
+  MessageCircle,
+  ArrowRight,
+  Clock,
+  Target,
+  Wand2,
+  TrendingUp,
+  TrendingDown,
+  Sparkles,
+  FileText,
+  Timer,
+} from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 
 export const Route = createFileRoute("/")({
@@ -20,6 +33,22 @@ export const Route = createFileRoute("/")({
   }),
   component: Dashboard,
 });
+
+const metrics = [
+  { label: "AI requests", value: "1,284", delta: "+18%", up: true, icon: Sparkles },
+  { label: "Emails drafted", value: "342", delta: "+9%", up: true, icon: Mail },
+  { label: "Docs analysed", value: "128", delta: "+24%", up: true, icon: FileText },
+  { label: "Hours saved", value: "46.5", delta: "-3%", up: false, icon: Timer },
+];
+
+const usage = [
+  { week: "W1", value: 180 },
+  { week: "W2", value: 215 },
+  { week: "W3", value: 142 },
+  { week: "W4", value: 240 },
+  { week: "W5", value: 198 },
+  { week: "W6", value: 260 },
+];
 
 const features = [
   {
