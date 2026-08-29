@@ -161,10 +161,11 @@ function Dashboard() {
             {usage.map((u) => (
               <div key={u.week} className="flex h-full flex-1 flex-col items-center justify-end gap-2">
                 <div
-                  className="w-full rounded-t-lg bg-primary/85"
-                  style={{ height: `${(u.value / 260) * 100}%` }}
+                  className="w-full shrink-0 rounded-t-lg bg-primary/85"
+                  style={{ height: `${Math.round((u.value / 260) * 130)}px` }}
                   title={`${u.week}: ${u.value}`}
                 />
+
                 <span className="text-[11px] text-muted-foreground">{u.week}</span>
               </div>
             ))}
