@@ -12,6 +12,7 @@ import {
   PanelLeftOpen,
 } from "lucide-react";
 import { Disclaimer } from "./Disclaimer";
+import { ThemeToggle } from "./ThemeToggle";
 
 const navItems = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard },
@@ -105,6 +106,10 @@ export function AppShell({ children }: { children: ReactNode }) {
           <NavLinks collapsed={collapsed} />
         </div>
 
+        <div className={collapsed ? "mb-3" : "mb-3"}>
+          <ThemeToggle compact={collapsed} />
+        </div>
+
         {!collapsed && (
           <div className="rounded-2xl border border-sidebar-border bg-muted p-4 text-xs text-foreground">
             <p className="font-semibold">Live AI</p>
@@ -117,14 +122,17 @@ export function AppShell({ children }: { children: ReactNode }) {
 
       <header className="sticky top-0 z-50 flex items-center justify-between border-b border-border bg-background/85 px-4 py-3 backdrop-blur lg:hidden">
         <Brand />
-        <button
+        <div className="flex items-center gap-2">
+          <ThemeToggle compact />
+          <button
           type="button"
           aria-label={open ? "Close menu" : "Open menu"}
           onClick={() => setOpen((v) => !v)}
           className="grid size-10 place-items-center rounded-xl border border-border bg-card text-foreground shadow-soft"
         >
           {open ? <X className="size-5" /> : <Menu className="size-5" />}
-        </button>
+          </button>
+        </div>
       </header>
 
       {open && (
